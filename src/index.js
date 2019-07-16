@@ -11,6 +11,12 @@ class Welcome extends React.Component {
   }
 }
 
+class Time extends React.Component {
+  render() {
+    return <h2>It is {new Date().toLocaleTimeString()}.</h2>;
+  }
+}
+
 const user = {
   firstName: "Joe",
   lastName: "Bloggs"
@@ -18,8 +24,8 @@ const user = {
 function tick() {
   const element = (
     <div>
-      <Welcome user={user}/>
-      <h2>It is {new Date().toLocaleTimeString()}.</h2>
+      <Welcome user={user} />
+      <Time />
     </div>
   );
   ReactDOM.render(element, document.getElementById("root"));
