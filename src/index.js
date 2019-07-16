@@ -11,9 +11,36 @@ class Welcome extends React.Component {
   }
 }
 
-class Time extends React.Component {
+class FormattedDate extends React.Component {
   render() {
-    return <h2>It is {new Date().toLocaleTimeString()}.</h2>;
+    return this.props.date.toLocaleTimeString();
+  }
+}
+
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: new Date()
+    };
+  }
+
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+
+  render() {
+    return <h2>It is <FormattedDate date={this.state.date}/>.</h2>;
   }
 }
 
@@ -21,14 +48,12 @@ const user = {
   firstName: "Joe",
   lastName: "Bloggs"
 };
-function tick() {
-  const element = (
-    <div>
-      <Welcome user={user} />
-      <Time />
-    </div>
-  );
-  ReactDOM.render(element, document.getElementById("root"));
-}
 
-setInterval(tick, 1000);
+const element = (
+  <div>
+    <Welcome user={user} />
+    <Clock />
+  </div>
+
+);
+ReactDOM.render(element, document.getElementById("root"));
