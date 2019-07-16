@@ -5,6 +5,10 @@ function formatName(user) {
   return user.firstName + " " + user.lastName;
 }
 
+function Welcome(props) {
+    return <h1>Hello, {formatName(props)}</h1>;
+  }
+
 const user = {
   firstName: "Joe",
   lastName: "Bloggs"
@@ -12,7 +16,7 @@ const user = {
 function tick() {
   const element = (
     <div>
-      <h1>Hello, {formatName(user)}!</h1>
+        {Welcome(user)}
       <h2>It is {new Date().toLocaleTimeString()}.</h2>
     </div>
   );
