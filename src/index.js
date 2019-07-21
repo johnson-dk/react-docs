@@ -470,6 +470,59 @@ function tryConvert(temperature, convert) {
   return rounded.toString();
 }
 
+function FancyBorder(props) {
+  return (
+    <div className={"FancyBorder FancyBorder-" + props.colour}>
+      {props.children}
+    </div>
+  );
+}
+
+function WelcomeDialog() {
+  return (
+    <FancyBorder colour="blue">
+      <h1 className="Dialog-title">Welcome</h1>
+      <p className="Dialog-messgae">Thank you for visiting Wales</p>
+    </FancyBorder>
+  );
+}
+
+function Contacts() {
+  return <div className="Contacts">Contacts</div>;
+}
+
+function Chat() {
+  return <div className="Chat">Chat</div>;
+}
+
+function SplitPane(props) {
+  return (
+    <div className="SplitPane">
+      <div className="SplitPane-left">{props.left}</div>
+      <div className="SplitPane-right">{props.right}</div>
+    </div>
+  );
+}
+
+function App() {
+  return <SplitPane left={<Contacts />} right={<Chat />} />;
+}
+
+function Dialog(props) {
+  return (
+    <FancyBorder colour="blue">
+      <h1 className="Dialog-titel">{props.title}</h1>
+      <p className="Dialog-message">{props.message}</p>
+    </FancyBorder>
+  );
+}
+
+function WelcomeDialogTwo() {
+  return (
+    <Dialog title="Welcome" message="Thank you for visiting our spacecraft!" />
+  );
+}
+
 const scaleNames = {
   c: "Celcius",
   f: "Fahrenheit"
@@ -502,6 +555,9 @@ const element = (
     <FlavourForm />
     <Reservation />
     <Calculator />
+    <WelcomeDialog />
+    <App />
+    <WelcomeDialogTwo />
   </div>
 );
 ReactDOM.render(element, document.getElementById("root"));
