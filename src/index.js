@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { numericLiteral } from "@babel/types";
 
 function formatName(user) {
   return user.firstName + " " + user.lastName;
@@ -166,39 +167,77 @@ function MailBox(props) {
 }
 
 function WarningBanner(props) {
-  if(!props.warn) {
+  if (!props.warn) {
     return null;
   }
-  return (
-    <div className="warning">
-      Warning!
-    </div>
-  )
+  return <div className="warning">Warning!</div>;
 }
 
 class Page extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {showWarning: true};
+    this.state = { showWarning: true };
     this.handleToggleClick = this.handleToggleClick.bind(this);
   }
   handleToggleClick() {
     this.setState(state => ({
       showWarning: !state.showWarning
-    }))
+    }));
   }
   render() {
     return (
       <div>
-        <WarningBanner warn={this.state.showWarning}/>
+        <WarningBanner warn={this.state.showWarning} />
         <button onClick={this.handleToggleClick}>
-          {this.state.showWarning ? 'Hide' : 'Show'}
+          {this.state.showWarning ? "Hide" : "Show"}
         </button>
       </div>
-    )
-  } 
+    );
+  }
 }
+
+function ListItem(props) {
+  return <li>{props.value}</li>;
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map(number => (
+    <ListItem key={number.toString()} value={number} />
+  ));
+  return <ul>{listItems}</ul>;
+}
+
+function Blog(props) {
+  const sideBar = (
+    <ul>
+      {props.posts.map(post => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  );
+  const content = props.posts.map(post => (
+    <div key={post.id}>
+      <h3>{post.title}</h3>
+      <p>{post.content}</p>
+    </div>
+  ));
+  return (
+    <div>
+      {sideBar}
+      <hr />
+      {content}
+    </div>
+  );
+}
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 const messages = ["React", "Re: React", "Re:Re: React"];
+
+const posts = [
+  {id: 1, title: 'Hello World', content: 'Welcome to learning React!'},
+  {id: 2, title: 'Installation', content: 'You can install React from npm.'}
+];
 
 const element = (
   <div>
@@ -210,7 +249,9 @@ const element = (
     <Greeting isLoggedIn={true} />
     <LoginControl />
     <MailBox unreadMessages={messages} />
-    <Page/>
+    <Page />
+    <NumberList numbers={numbers} />
+    <Blog posts={posts} />
   </div>
 );
 ReactDOM.render(element, document.getElementById("root"));
